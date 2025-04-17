@@ -1,0 +1,66 @@
+1. Display the first name and salary for all employees who earn more than employee number 
+103. 
+-->mysql> select first_name ,salary from employees where salary > (select  salary from employees where employee_id= 103) ;
+
+2. Display all the information of employees who are working in Sales or IT department. 
+-->mysql> select * from employees where department_id in (select department_id from departments where department_name = "it" or department_name = "sales");
+
+3. Write a query to display the first name and last name, salary, department id for those 
+employees whose salary in average salary of any of departments. 
+-->mysql> select first_name ,last_name ,department_id ,salary from employees where salary= any( select  avg(salary) from employees group by department_id);
+
+4. Write a query to display the first name, last name and hiredate for all employees, who are 
+working in the same department as an employee whose last name is Fox. Exclude Fox. 
+-->select first_name ,last_name ,hire_date from employees where last_name <>  "fox" and department_id=(select department_id from employees where last_name ="fox");
+
+5. Display the employee first name, last name and employee id, for all employees whose department location is London. 
+-->mysql> select first_name,last_name ,employee_id from employees join departments using (department_id) join locations using(location_id) where city ="london";
+(another way)
+mysql> select first_name,last_name ,employee_id from employees as e where e.department_id=(select d.department_id from departments  as d where d
+.department_id=e.department_id and d.location_id=(select l.location_id from locations l where l.city ="london"));
+
+
+
+6. Display the employee ID and Full name of all employees who works in same department where the employees having first name containing a letter 'Z'
+-->mysql> select concat(first_name," ",last_name) as 'full Name' ,employee_id from employees as e where first_name like "%Z%" and department_id=(select department_id from departments where department_id=e.department_id);
+
+
+7. Find out the names of all employees whose salary is greater than 50% of their department's 
+total salary bill.
+-->mysql> select  first_name ,salary from employees e1 where salary >(select sum(salary)*0.5 from employees e2 where e2.department_id=e1.department_id);
+
+
+ 
+8. Write a query to get the details of employees who are managers. 
+-->mysql> select * from employees e where e.employee_id in(select manager_id from employees where e.employee_id=manager_id);
+
+
+9. Display the employee id, name, salary, department name and city for all the employees who 
+gets the salary as the salary earn by the employee which is maximum within the joining 
+person January 1st, 1990 and December 31st, 1991.  
+-->mysql> select e.employee_id,e.first_name,e.salary ,d.department_name,l.city from employees e join departments d using(department_id) join locations l using(location_id) where salary =(select MAX(salary) from employees where hire_date BETWEEN '1990-01-01' and '1991-12-31') ;
+
+
+10. Find all departments that do not have any employees. 
+-->mysql> select department_name,department_id from departments where department_id not in(select distinct department_id from employees where department_id is not null);
+
+
+11. Write a query in SQL to show the details of employees of job type ST_CLERK, SA-REP, 
+AD_ASST whose working location is Seattle.
+ -->mysql> select * from employees where job_id in("ST_CLERK","SA_REP","AD_ASST") And department_id in(select department_id from departments where location_id=(select location_id from locations where city="seattle"));
+
+
+12. Find out the employees whose salaries are greater than the salaries of their managers. 
+--> mysql> select employee_id,manager_id,salary,first_name from employees where salary>(select salary from employees e where e.employee_id=employees.manager_id);
+
+
+13. List the highest paid employees working under DEN. 
+-->mysql> select first_name ,salary from employees e where e.manager_id=(select employee_id from employees where first_name="den") and salary =(select max(salary) from employees where manager_id=(select employee_id from employees where first_name="den"));
+
+
+14. Display the detail information of departments which starting salary is at least 8000. 
+-->mysql> select *from departments where department_id in(select department_id from employees where salary >=8000);
+
+
+15. Display the full name of manager who is supervising 4 or more employees. 
+-->mysql> select first_name,last_name from employees e where e.employee_id in(select manager_id from employees group by manager_id having count(employee_id)>=4) ;

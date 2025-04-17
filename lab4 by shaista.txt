@@ -1,0 +1,58 @@
+1. Write a query to lists the number of employees in each department.  
+
+mysql> select count(employee_id) as employeee_count, department_id  from employees group by department_id ;
+
+2. Write a query to display the department id where at least 5 employees should be in each department. 
+
+mysql> select count(employee_id )as employee_count, department_id  from employees  group by department_id having department_id>=5 ;
+3. Write a query to display all columns of those employees who has first name is unique. 
+
+mysql> select first_name from employees group by first_name  having count(first_name)=1;
+
+4. Write a SQL query to get name of students containing exactly four characters. 
+
+mysql> select first_name from employees WHERE first_name like '____' group by first_name;
+
+5. Write a query to display the list of employee names that have letters ‘LA’ in their names. 
+
+mysql> select first_name from employees WHERE first_name REGEXP 'LA' group by first_name;
+
+6. Write a query to display names of those employees whose first name starts with ‘A’ and ends with ‘N’. 
+
+mysql> select first_name,last_name from employees where first_name regexp '^A.*N$';
+
+7. Write a query to display first names of all employees that end with alphabet ‘N’. 
+
+mysql> select first_name from employees where first_name regexp 'N$';
+
+8. Write a query to display FIRST_NAME, LASTNAME of all employees whose first name 
+starts with letter ‘A’. 
+
+mysql> select first_name ,last_name from employees where first_name regexp '^[A]';
+
+9. Write a query to display the number of employees with the same job.
+
+mysql> select count(employee_id) ,job_id from employees group by job_id having count(employee_id)>1;
+
+10. Display the manager number and the salary of the lowest paid employee of that 
+manager. Exclude anyone whose manager is not known. Exclude any groups where the minimum salary is 2000. Sort the output is descending order of the salary. 
+
+mysql> select  manager_id ,MIN(salary) as min from employees where manager_id is not null group by manager_id
+    -> having min != 2000
+    -> order by min DESC;
+
+11. Display the total number of employees who have no commission. 
+
+mysql> select count(*) as No_comission_employees from employees where commission_pct is null;
+
+12. Write a query to display FIRST_NAME, LASTNAME of all employees whose first name 
+small ‘t’. 
+
+mysql> select first_name,last_name from employees where first_name like 't%';
+
+
+
+
+(Shaista Rasool shaikh )
+
+

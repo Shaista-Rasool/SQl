@@ -1,0 +1,72 @@
+Using Employee table, solve the following queries (1-5). 
+1. Create a replica of Employee table with all the records in it. 
+CREATE TABLE copy_employee  AS SELECT * FROM hr.Employees;
+
+
+2. Add a column ‘Permanent Address’ in it.  
+alter table copy_employee add( permennat_address varchar(50));
+
+
+3. Drop column ‘Address’ from it.  
+alter table copy_employee drop  column permennat_address;
+
+
+4. Add columns ‘House No’ character ,’Street No’ numeric, ’Area’ character ,’City’ character in it 
+with the respective data types.
+alter table copy_employee add(
+house_no character (50)
+, street_no numeric (20)
+, city character(50),
+area character (50)
+);
+
+  
+5. Change the data type of ‘House No’ from character to numeric.  
+alter table copy_employee modify house_no numeric;
+
+
+6. Create the Data Definitions for each of the relations shown below, using SQL DDL. Assume the 
+following attributes and data types:  
+FACULTY:  
+FacultyID (integer, primary key)  
+FacultyName (25 characters)
+  
+create  table faculty( facultyid int primary key, facultynumber varchar(25));
+
+
+COURSE:  
+CourseID (8 characters, primary key)  CourseName (1 characters)  
+
+create  table course(courseId char(8) primary key,coursename varchar(15));
+
+
+CLASS: 
+ClassID (8 characters)  
+CourseID (8 characters foreign key)  
+SectionNo (integer)  
+Semester (10 characters)  
+
+create  table class(class_Id char(8) ,course_Id char(8) ,section_no int , semester varchar(8),foreign key(course_Id) references course (course_Id));
+
+STUDENT: 
+StudentID (integer, primary key)  
+StudentName (25 characters)  
+FacultyID (integer foreign key)  
+
+create table student(student_id int primary key,student_namme char(25),
+faculty_id  int(25),  foreign key(faculty_id) references faculty(faculty_id));
+
+7. How would you add an attribute, CLASS, to the STUDENT table?  
+--> alter table student add class varchaer(20);
+
+8. Write a SQL statement to rename the table department to dept (with both methods).  
+-->alter table departments rename dept;
+--> rename table departments to dept ; 
+
+9. Write a SQL statement to add a column regionId to the table locations.  
+--> alter table location add region_id int;
+
+10. Write a SQL statement to change the name of the column state_province to state in locations 
+table, keeping the data type and size same.
+-->alter table locations rename column state_province to state ;
+ 

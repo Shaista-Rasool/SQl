@@ -1,0 +1,41 @@
+Q1:
+Ans:mysql> select concat(left(first_name,3),right(job_id,3)) from employees;
+Q2:
+Ans:mysql> select replace(job_id,"E","A") as New_jobs from employees;
+Q3:
+Ans:mysql> select first_name,year(hire_date) as years from employees;
+Q4:
+Ans:'> select first_name,last_name, hire_date from employees where hire_date < STR_TO_DATE('july 30 ,1987,'%M %d %Y');
+Q5:
+Ans:mysql>   select last_day(date_sub(current_date(), interval 3 Month)) as last_date;
+Q6:
+Ans:mysql> select day(current_date()) as current_day;
+Q7:
+Ans:mysql> select  date_format(hire_date,"%M %d, %Y") from employees;
+Q8:
+Ans:mysql> select  date_format(hire_date,"%W %M %Y") from employees;
+Q9:
+Ans:mysql> select first_name ,hire_date from employees where hire_date between  '1987-06-01' and '1987-07-30';
+Q10
+Ans:mysql> select date_format(current_date,'%d/%m/%Y') as date_format;
++--------------------------------------+
+| date_format                           |
++--------------------------------------+
+| 07/02/2025                           |
++--------------------------------------+
+Q11
+Ans:mysql> select first_name,last_name from employees where month(hire_date)=6;
+Q12
+Ans:mysql> select concat(email,'@iba-suk.edu.pk') as Email from employees;
+Q13
+Ans:mysql> select employee_id,first_name ,mid(hire_date,6,2) from employees;
+Q14
+Ans:mysql> select right(phone_number,4) as PHone_number from employees;
+Q15
+Ans:mysql>  select substring(street_address ,' ',-1) from locations;
+Q16
+Ans:mysql>  select  street_address  from locations where length(street_address)= (select min(length(street_address)) from locations);
+Q17
+Ans:mysql> select substring_index( job_title ,' ',1) as first_word from jobs where job_title like '% %';
+Q18:
+Ans:mysql> select first_name,length(first_name) as Name_length from employees where last_name like '_%c'
